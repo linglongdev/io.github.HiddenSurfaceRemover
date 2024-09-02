@@ -1,0 +1,62 @@
+From 06ac95483c7d437d884c649689a3505c444326c0 Mon Sep 17 00:00:00 2001
+From: wjyrich <1071633242@qq.com>
+Date: Wed, 14 Aug 2024 16:29:28 +0800
+Subject: [PATCH] install
+
+---
+ CMakeLists.txt               | 13 ++++++++++++-
+ HiddenSurfaceRemover.desktop | 11 +++++++++++
+ 2 files changed, 23 insertions(+), 1 deletion(-)
+ create mode 100644 HiddenSurfaceRemover.desktop
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e6db225..975962a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,6 +4,7 @@ project(HiddenSurfaceRemover)
+ set(CMAKE_AUTOMOC ON)
+ 
+ include_directories(include)
++include_directories(${CMAKE_INSTALL_PREFIX}/include)
+ set(HEADER
+         include/ActiveEdge.h
+         include/ActivePolygon.h
+@@ -44,4 +45,14 @@ target_link_libraries(
+         Qt5::Core
+         Qt5::Gui
+         Qt5::Widgets
+-)
+\ No newline at end of file
++)
++
++install(TARGETS ${PROJECT_NAME}
++             DESTINATION bin)
++
++install(FILES screenshot/HiddenSurfaceRemover.png
++        DESTINATION share/icons)
++
++
++install(FILES HiddenSurfaceRemover.desktop
++            DESTINATION share/applications)
+\ No newline at end of file
+diff --git a/HiddenSurfaceRemover.desktop b/HiddenSurfaceRemover.desktop
+new file mode 100644
+index 0000000..6ded032
+--- /dev/null
++++ b/HiddenSurfaceRemover.desktop
+@@ -0,0 +1,11 @@
++[Desktop Entry]
++Categories=Accessibility;Qt;Utility;
++Exec=HiddenSurfaceRemover
++Name=HiddenSurfaceRemover
++Name[zh_CN]=HiddenSurfaceRemover
++Icon=HiddenSurfaceRemover
++StartupNotify=false
++Terminal=false
++Type=Application
++GenericName=HiddenSurfaceRemover
++Version=1.0
+\ No newline at end of file
+-- 
+2.43.4
+

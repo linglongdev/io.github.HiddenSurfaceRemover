@@ -1,0 +1,42 @@
+version: "1"
+
+package:
+  id: io.github.HiddenSurfaceRemover
+  name: HiddenSurfaceRemover
+  version: 0.0.0.1
+  kind: app
+  description: |
+    Z-buffer, scanline Z-buffer, hierarchical Z-buffer and hierarchical Z-buffer with octree algorithm to determine hidden surfaces.
+
+command:
+  - /opt/apps/io.github.HiddenSurfaceRemover/files/bin/HiddenSurfaceRemover
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/Wajov/HiddenSurfaceRemover.git
+    version: master
+    commit: fc1cfd883d0f220b672e87402e3160e929603a1a
+  - kind: git
+    url: https://github.com/assimp/assimp.git
+    version: master
+    commit: 8f0c6b04b2257a520aaab38421b2e090204b69df
+
+build: |
+  cd /project/linglong/sources/assimp.git
+  mkdir build
+  cd build
+  cmake .. \
+        -DCMAKE_INSTALL_PREFIX=${PREFIX}
+  cmake --build . --target install -j$(nproc --all)
+
+  cd /project/linglong/sources/HiddenSurfaceRemover.git
+  cp screenshot/2.png screenshot/HiddenSurfaceRemover.png
+  git apply ../../../0001-install.patch
+  mkdir build
+  cd build
+  cmake .. \
+        -DCMAKE_INSTALL_PREFIX=${PREFIX}
+  cmake --build . --target install -j$(nproc --all)
